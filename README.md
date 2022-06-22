@@ -2,6 +2,7 @@
 
 ## Table of Contents
 - [Part 2](#part-2)
+- [Part 3](#part-3)
 
 <br>
 
@@ -14,3 +15,13 @@ Setting up OpenGL and Creating a Window in C++.
 + Draw a window using GLFW
 + Draw a triangle using OpenGL
 
+<br>
+
+### Part 3
+----------
+Using Modern OpenGL in C++
+
++ Download and/or install GLEW
++ Link GLEW to the program
++ Initialize GLEW
++ Print the version of OpenGL being used

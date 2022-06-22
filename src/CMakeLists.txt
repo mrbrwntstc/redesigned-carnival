@@ -6,8 +6,19 @@ set(SOURCE_FILES
 
 add_executable(thechernopengl ${SOURCE_FILES})
 
+target_compile_definitions(thechernopengl
+PRIVATE
+  GLEW_STATIC
+)
+
+target_include_directories(thechernopengl
+PRIVATE
+  ${GLEW_INCLUDE_DIRS}
+)
+
 target_link_libraries(thechernopengl
 PRIVATE
   glfw
   OpenGL::GL
+  ${GLEW_LIBRARIES}
 )
