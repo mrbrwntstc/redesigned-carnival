@@ -2,6 +2,8 @@
 
 [YouTube Link](https://www.youtube.com/playlist?list=PLlrATfBNZ98foTJPJ_Ev03o2oq3-GGOS2)
 
+[OpenGL Documentation](https://docs.gl)
+
 ## Table of Contents
 - [Part 2](#part-2)
 - [Part 3](#part-3)
@@ -38,10 +40,11 @@ Vertex Buffers and Drawing a Triangle in OpenGL
 
 + Create a vertex buffer
 + Invoke the draw call to draw the triangle (will not render without a shader)
-+ Check [docs.gl](https://docs.gl) for incredible documentation on OpenGL methods
 
 <br>
 
 ### Part 5
 ----------
 Vertex Attributes and Layouts in OpenGL
+
++ Specify the location and data format of the vertex buffer using `glVertexAttribPointer` (will make more sense once the shader is written)
