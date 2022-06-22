@@ -9,6 +9,7 @@
 - [Part 3](#part-3)
 - [Part 4](#part-4)
 - [Part 5](#part-5)
+- [Part 7](#part-7)
 
 <br>
 
@@ -48,3 +49,13 @@ Vertex Buffers and Drawing a Triangle in OpenGL
 Vertex Attributes and Layouts in OpenGL
 
 + Specify the location and data format of the vertex buffer using `glVertexAttribPointer` (will make more sense once the shader is written)
+
+### Part 7
+----------
+Writing a Shader in OpenGL
+
++ Write and compile a vertex shader
++ Write and compile a fragment shader
++ Link vertex and fragment shaders to a shader program
+
+**NOTE**: May or may not draw since there's no vertex array buffer and vertex buffer object
