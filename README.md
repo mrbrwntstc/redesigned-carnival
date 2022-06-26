@@ -11,6 +11,7 @@
 - [Part 5](#part-5)
 - [Part 7](#part-7)
 - [Part 8](#part-8)
+- [Part 9](#part-9)
 
 <br>
 
@@ -61,7 +62,7 @@ Writing a Shader in OpenGL
 + Write and compile a fragment shader
 + Link vertex and fragment shaders to a shader program
 
-**NOTE**: May or may not draw since there's no vertex array buffer and vertex buffer object
+**NOTE**: May or may not render since there's no vertex array buffer and vertex buffer object
 
 <br>
 
@@ -72,3 +73,14 @@ The Cherno's Way of Dealing with Shaders in OpenGL
 + Move the vertex and fragment shader source code to a file
 + Parse the shader file that contains vertex and fragment shader files to memory
 + Pass the parsed shader code to the `createShader` method
+
+**NOTE**: May or may not render since there's no vertex array buffer and vertex buffer object
+
+<br>
+
+### Part 9
+----------
+Index Buffers in OpenGL
+
++ Create an index buffer to prevent drawing duplicate vertices
++ Use the index buffer (already bound) to draw the last bound position buffer using `glDrawElements`
