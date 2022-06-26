@@ -2,7 +2,7 @@
 
 [YouTube Link](https://www.youtube.com/playlist?list=PLlrATfBNZ98foTJPJ_Ev03o2oq3-GGOS2)
 
-[OpenGL Documentation](https://docs.gl)
+[(Unofficial, but really nice) OpenGL Documentation](https://docs.gl)
 
 ## Table of Contents
 - [Part 2](#part-2)
@@ -12,6 +12,7 @@
 - [Part 7](#part-7)
 - [Part 8](#part-8)
 - [Part 9](#part-9)
+- [Part 10](#part-10)
 
 <br>
 
@@ -84,3 +85,19 @@ Index Buffers in OpenGL
 
 + Create an index buffer to prevent drawing duplicate vertices
 + Use the index buffer (already bound) to draw the last bound position buffer using `glDrawElements`
+
+**NOTE**: May or may not render since there's no vertex array buffer and vertex buffer object
+
+<br>
+
+### Part 10
+-----------
+Dealing with Errors in OpenGL
+
++ Poll OpenGL for all errors that have occured
++ Create a macro to stop the program once OpenGL throws an error
++ Improve the macro to print the following
+  - the function name
+  - the file name
+  - the line number
++ wrap as many OpenGL function calls as possible (ideally, wrap all OpenGL calls)
