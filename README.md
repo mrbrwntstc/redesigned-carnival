@@ -10,6 +10,7 @@
 - [Part 4](#part-4)
 - [Part 5](#part-5)
 - [Part 7](#part-7)
+- [Part 8](#part-8)
 
 <br>
 
@@ -50,6 +51,8 @@ Vertex Attributes and Layouts in OpenGL
 
 + Specify the location and data format of the vertex buffer using `glVertexAttribPointer` (will make more sense once the shader is written)
 
+<br>
+
 ### Part 7
 ----------
 Writing a Shader in OpenGL
@@ -59,3 +62,13 @@ Writing a Shader in OpenGL
 + Link vertex and fragment shaders to a shader program
 
 **NOTE**: May or may not draw since there's no vertex array buffer and vertex buffer object
+
+<br>
+
+### Part 8
+----------
+The Cherno's Way of Dealing with Shaders in OpenGL
+
++ Move the vertex and fragment shader source code to a file
++ Parse the shader file that contains vertex and fragment shader files to memory
++ Pass the parsed shader code to the `createShader` method
