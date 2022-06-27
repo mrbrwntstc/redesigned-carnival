@@ -171,17 +171,31 @@ int main(void)
   // std::cout << "FRAGMENT" << std::endl;
   // std::cout << source.fragmentSource << std::endl;
   unsigned int shader = createShader(source.vertexSource, source.fragmentSource);
-  glUseProgram(shader);
+  GlCall((shader));
+
+  GlCall(int location = glGetUniformLocation(shader, "u_color"));
+  ASSERT(location != -1);
+  GlCall(glUniform4f(location, 0.2f, 0.3f, 0.8f, 1.0f));
+
+  float r = 0.0f;
+  float increment = 0.05f;
 
   /* Loop until the user closes the window */
   while (!glfwWindowShouldClose(window))
   {
     /* Render here */
-    glClear(GL_COLOR_BUFFER_BIT);
+    GlCall(glClear(GL_COLOR_BUFFER_BIT));
 
     // glDrawArrays(GL_TRIANGLES, 0, 6); // no index buffer
     // glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr); // with index buffer
     GlCall(glDrawElements(GL_TRIANGLES, 6, GL_INT, nullptr)); // wrong(?)
+
+    if(r > 1.0f)
+      increment = -0.05f;
+    else if(r < 0.0f)
+      increment = 0.05f;
+
+    r += increment;
 
     /* Swap front and back buffers */
     glfwSwapBuffers(window);
@@ -190,7 +204,9 @@ int main(void)
     glfwPollEvents();
   }
 
-  glDeleteProgram(shader);
+  GlCall(glDeleteProgram(shader));
+
+  glfwSwapInterval(1);
 
   glfwTerminate();
   return 0;

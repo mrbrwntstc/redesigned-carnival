@@ -13,6 +13,7 @@
 - [Part 8](#part-8)
 - [Part 9](#part-9)
 - [Part 10](#part-10)
+- [Part 11](#part-11)
 
 <br>
 
@@ -101,3 +102,13 @@ Dealing with Errors in OpenGL
   - the file name
   - the line number
 + wrap as many OpenGL function calls as possible (ideally, wrap all OpenGL calls)
+
+**NOTE**: May or may not render since there's no vertex array buffer and vertex buffer object
+
+### Part 11
+-----------
+Uniforms in OpenGL
+
++ Create a uniform variable in the fragment shader code
++ Set the shape's color by setting the uniform variable value in `application.cpp`
++ Animate the shader's color over time
