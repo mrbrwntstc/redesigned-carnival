@@ -122,3 +122,11 @@ Vertex Arrays in OpenGL
 + Create a vertex array and bind it before creating buffer arrays and shaders
 
 **NOTE**: _Should_ render regardless of Core or Compatibility mode.
+
+### Part 13
+-----------
+Abstracting OpenGL into Classes
+
++ Abstract the vertex buffer creation and binding in a class called `VertexBuffer`
++ Abstract the index buffer creation and binding in a class called `IndexBuffer`
++ Substitute all manual vertex buffer and index buffer code with class methods in `application.cpp`

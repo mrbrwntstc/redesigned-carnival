@@ -3,29 +3,12 @@
 
 #include <iostream>
 #include <fstream>
-#include <string>
 #include <sstream>
+#include <string>
 
-#define ASSERT(x) if(!(x)) __builtin_trap()
-#define GlCall(x) GlClearError();\
-  x;\
-  ASSERT(GlLogCall(#x, __FILE__, __LINE__))
-
-static void GlClearError()
-{
-  while(glGetError() != GL_NO_ERROR);
-}
-
-static bool  GlLogCall(const char* function, const char* file, int line)
-{
-  while(GLenum error = glGetError())
-  {
-    std::cout << "[OpenGL Error] (" << error << "): " << function << " " << file << ": " << line << std::endl;
-    return false;
-  }
-
-  return true;
-}
+#include "renderer.h"
+#include "vertexbuffer.h"
+#include "indexbuffer.h"
 
 struct ShaderProgramSource
 {
@@ -131,6 +114,8 @@ int main(void)
   /* Make the window's context current */
   glfwMakeContextCurrent(window);
 
+  glfwSwapInterval(1);
+
   GLenum err = glewInit();
   if(GLEW_OK != err)
     std::cerr << "Error: " << glewGetErrorString(err) << std::endl;
@@ -138,93 +123,83 @@ int main(void)
   std::cout << "Status: Using GLEW " << glewGetString(GLEW_VERSION) << std::endl;
   std::cout << "Status: Using OpenGL Version " << glGetString(GL_VERSION) << std::endl;
 
-  float positions[8] = {
-    -0.5f, -0.5f,     // 0
-     0.5f, -0.5f,     // 1
-    //  0.5f,  0.5f,
-     0.5f,  0.5f,     // 2
-    -0.5f,  0.5f      // 3
-    // -0.5f, -0.5f
-  };
+  { // scope the vertexbuffer and index buffer objects so glfwTerminate will terminate cleanly
+    float positions[8] = {
+      -0.5f, -0.5f,     // 0
+      0.5f, -0.5f,     // 1
+      //  0.5f,  0.5f,
+      0.5f,  0.5f,     // 2
+      -0.5f,  0.5f      // 3
+      // -0.5f, -0.5f
+    };
 
-  unsigned int indices[6] = {
-    0, 1, 2,
-    2, 3, 0
-  };
+    unsigned int indices[6] = {
+      0, 1, 2,
+      2, 3, 0
+    };
 
-  unsigned int vao;
-  GlCall(glGenVertexArrays(1, &vao));
-  GlCall(glBindVertexArray(vao));
-
-  unsigned int buffer;
-  GlCall(glGenBuffers(1, &buffer));
-  GlCall(glBindBuffer(GL_ARRAY_BUFFER, buffer));
-  GlCall(glBufferData(GL_ARRAY_BUFFER, 6 * 2 * sizeof(float), positions, GL_STATIC_DRAW));
-
-  GlCall(glEnableVertexAttribArray(0));
-  GlCall(glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (const void*)0));
-
-
-  unsigned int ibo; // index buffer object
-  GlCall(glGenBuffers(1, &ibo));
-  GlCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo));
-  GlCall(glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6 * sizeof(unsigned int), indices, GL_STATIC_DRAW));
-
-  ShaderProgramSource source = parseShader("/home/mrbrwntstc/repos/redesigned-carnival/resources/shaders/basic.shader");
-  // std::cout << "VERTEX" << std::endl;
-  // std::cout << source.vertexSource << std::endl;
-  // std::cout << "FRAGMENT" << std::endl;
-  // std::cout << source.fragmentSource << std::endl;
-  unsigned int shader = createShader(source.vertexSource, source.fragmentSource);
-  GlCall(glUseProgram(shader));
-
-  GlCall(int location = glGetUniformLocation(shader, "u_color"));
-  ASSERT(location != -1);
-  GlCall(glUniform4f(location, 0.2f, 0.3f, 0.8f, 1.0f));
-
-  // unbind everything
-  GlCall(glBindVertexArray(0));
-  GlCall(glBindBuffer(GL_ARRAY_BUFFER, 0));
-  GlCall(glBindBuffer(GL_ARRAY_BUFFER, 0));
-  GlCall(glUseProgram(0));
-
-  float r = 0.0f;
-  float increment = 0.05f;
-
-  /* Loop until the user closes the window */
-  while (!glfwWindowShouldClose(window))
-  {
-    /* Render here */
-    GlCall(glClear(GL_COLOR_BUFFER_BIT));
-
-    GlCall(glBindBuffer(GL_ARRAY_BUFFER, buffer));
-    GlCall(glBindBuffer(GL_ARRAY_BUFFER, ibo));
-    GlCall(glUseProgram(shader));  
-
+    unsigned int vao;
+    GlCall(glGenVertexArrays(1, &vao));
     GlCall(glBindVertexArray(vao));
-    GlCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo));
 
-    // glDrawArrays(GL_TRIANGLES, 0, 6); // no index buffer
-    GlCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr)); // with index buffer
-    // GlCall(glDrawElements(GL_TRIANGLES, 6, GL_INT, nullptr)); // wrong(?)
+    VertexBuffer vb(positions, 4 * 2 * sizeof(float));
 
-    if(r > 1.0f)
-      increment = -0.05f;
-    else if(r < 0.0f)
-      increment = 0.05f;
+    GlCall(glEnableVertexAttribArray(0));
+    GlCall(glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (const void*)0));
 
-    r += increment;
+    IndexBuffer ib(indices, 6);
 
-    /* Swap front and back buffers */
-    glfwSwapBuffers(window);
+    ShaderProgramSource source = parseShader("/home/mrbrwntstc/repos/redesigned-carnival/resources/shaders/basic.shader");
+    unsigned int shader = createShader(source.vertexSource, source.fragmentSource);
+    GlCall(glUseProgram(shader));
 
-    /* Poll for and process events */
-    glfwPollEvents();
+    GlCall(int location = glGetUniformLocation(shader, "u_color"));
+    ASSERT(location != -1);
+    GlCall(glUniform4f(location, 0.8f, 0.3f, 0.8f, 1.0f));
+
+    // unbind everything
+    GlCall(glBindVertexArray(0));
+    GlCall(glBindBuffer(GL_ARRAY_BUFFER, 0));
+    GlCall(glBindBuffer(GL_ARRAY_BUFFER, 0));
+    GlCall(glUseProgram(0));
+
+    float r = 0.0f;
+    float increment = 0.05f;
+
+    /* Loop until the user closes the window */
+    while (!glfwWindowShouldClose(window))
+    {
+      /* Render here */
+      GlCall(glClear(GL_COLOR_BUFFER_BIT));
+
+      // GlCall(glBindBuffer(GL_ARRAY_BUFFER, buffer));
+      GlCall(glUseProgram(shader));  
+
+      GlCall(glBindVertexArray(vao));
+      // GlCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo));
+      ib.bind();
+
+      // glDrawArrays(GL_TRIANGLES, 0, 6); // no index buffer
+      GlCall(glUniform4f(location, r, 0.3f, 0.8f, 1.0f));
+      GlCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr)); // with index buffer
+      // GlCall(glDrawElements(GL_TRIANGLES, 6, GL_INT, nullptr)); // wrong(?)
+
+      if(r > 1.0f)
+        increment = -0.05f;
+      else if(r < 0.0f)
+        increment = 0.05f;
+
+      r += increment;
+
+      /* Swap front and back buffers */
+      glfwSwapBuffers(window);
+
+      /* Poll for and process events */
+      glfwPollEvents();
+    }
+
+    GlCall(glDeleteProgram(shader));
   }
-
-  GlCall(glDeleteProgram(shader));
-
-  glfwSwapInterval(1);
 
   glfwTerminate();
   return 0;
