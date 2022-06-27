@@ -155,7 +155,6 @@ int main(void)
   GlCall(glUniform4f(location, 0.8f, 0.3f, 0.8f, 1.0f));
 
   // unbind everything
-  GlCall(glBindVertexArray(0));
   GlCall(glBindBuffer(GL_ARRAY_BUFFER, 0));
   GlCall(glBindBuffer(GL_ARRAY_BUFFER, 0));
   GlCall(glUseProgram(0));
