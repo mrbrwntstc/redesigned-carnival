@@ -14,6 +14,9 @@
 - [Part 9](#part-9)
 - [Part 10](#part-10)
 - [Part 11](#part-11)
+- [Part 12](#part-12)
+- [Part 13](#part-13)
+- [Part 14](#part-14)
 
 <br>
 
@@ -123,6 +126,8 @@ Vertex Arrays in OpenGL
 
 **NOTE**: _Should_ render regardless of Core or Compatibility mode.
 
+<br>
+
 ### Part 13
 -----------
 Abstracting OpenGL into Classes
@@ -131,3 +136,14 @@ Abstracting OpenGL into Classes
 + Abstract the vertex buffer creation and binding in a class called `VertexBuffer`
 + Abstract the index buffer creation and binding in a class called `IndexBuffer`
 + Substitute all manual vertex buffer and index buffer code with class methods in `application.cpp`
+
+<br>
+
+### Part 14
+-----------
+Buffer Layout Abstraction in OpenGL
+
++ Abstract Vertex Array Object interaction to separate class
++ Abstract Vertex Buffer Object interaction to separate class
++ Abstract defining Vertex Buffer layout to separate class
++ Replace all necessary code with the new classes to render a square
