@@ -2,6 +2,12 @@
 
 set(SOURCE_FILES
   application.cpp
+  indexbuffer.h
+  indexbuffer.cpp
+  vertexbuffer.h
+  vertexbuffer.cpp
+  renderer.h
+  renderer.cpp
 )
 
 add_executable(thechernopengl ${SOURCE_FILES})
