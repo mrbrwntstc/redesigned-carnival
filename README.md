@@ -127,6 +127,7 @@ Vertex Arrays in OpenGL
 -----------
 Abstracting OpenGL into Classes
 
++ Abstract custom OpenGL methods and macros to `renderer` files
 + Abstract the vertex buffer creation and binding in a class called `VertexBuffer`
 + Abstract the index buffer creation and binding in a class called `IndexBuffer`
 + Substitute all manual vertex buffer and index buffer code with class methods in `application.cpp`
