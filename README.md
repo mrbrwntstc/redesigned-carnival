@@ -123,6 +123,8 @@ Vertex Arrays in OpenGL
 
 **NOTE**: _Should_ render regardless of Core or Compatibility mode.
 
+<br>
+
 ### Part 13
 -----------
 Abstracting OpenGL into Classes
