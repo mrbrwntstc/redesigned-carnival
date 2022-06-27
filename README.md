@@ -64,7 +64,7 @@ Writing a Shader in OpenGL
 + Write and compile a fragment shader
 + Link vertex and fragment shaders to a shader program
 
-**NOTE**: May or may not render since there's no vertex array buffer and vertex buffer object
+**NOTE**: If OpenGL Compatibility mode, should render. If OpenGL Core mode, won't render.
 
 <br>
 
@@ -76,7 +76,7 @@ The Cherno's Way of Dealing with Shaders in OpenGL
 + Parse the shader file that contains vertex and fragment shader files to memory
 + Pass the parsed shader code to the `createShader` method
 
-**NOTE**: May or may not render since there's no vertex array buffer and vertex buffer object
+**NOTE**: If OpenGL Compatibility mode, should render. If OpenGL Core mode, won't render.
 
 <br>
 
@@ -87,7 +87,7 @@ Index Buffers in OpenGL
 + Create an index buffer to prevent drawing duplicate vertices
 + Use the index buffer (already bound) to draw the last bound position buffer using `glDrawElements`
 
-**NOTE**: May or may not render since there's no vertex array buffer and vertex buffer object
+**NOTE**: If OpenGL Compatibility mode, should render. If OpenGL Core mode, won't render.
 
 <br>
 
@@ -103,7 +103,7 @@ Dealing with Errors in OpenGL
   - the line number
 + wrap as many OpenGL function calls as possible (ideally, wrap all OpenGL calls)
 
-**NOTE**: May or may not render since there's no vertex array buffer and vertex buffer object
+**NOTE**: If OpenGL Compatibility mode, should render. If OpenGL Core mode, won't render.
 
 ### Part 11
 -----------
@@ -112,3 +112,13 @@ Uniforms in OpenGL
 + Create a uniform variable in the fragment shader code
 + Set the shape's color by setting the uniform variable value in `application.cpp`
 + Animate the shader's color over time
+
+**NOTE**: If OpenGL Compatibility mode, should render. If OpenGL Core mode, won't render.
+
+### Part 12
+-----------
+Vertex Arrays in OpenGL
+
++ Create a vertex array and bind it before creating buffer arrays and shaders
+
+**NOTE**: _Should_ render regardless of Core or Compatibility mode.
