@@ -17,6 +17,7 @@
 - [Part 12](#part-12)
 - [Part 13](#part-13)
 - [Part 14](#part-14)
+- [Part 15](#part-15)
 
 <br>
 
@@ -147,3 +148,7 @@ Buffer Layout Abstraction in OpenGL
 + Abstract Vertex Buffer Object interaction to separate class
 + Abstract defining Vertex Buffer layout to separate class
 + Replace all necessary code with the new classes to render a square
+
+### Part 15
+-----------
+Shader Abstraction in OpenGL
