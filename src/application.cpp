@@ -118,6 +118,7 @@ int main(void)
   // hint at OpenGL to use modern OpenGL
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+  glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
   /* Create a windowed mode window and its OpenGL context */
   window = glfwCreateWindow(640, 480, "Hello World", NULL, NULL);
@@ -151,13 +152,17 @@ int main(void)
     2, 3, 0
   };
 
+  unsigned int vao;
+  GlCall(glGenVertexArrays(1, &vao));
+  GlCall(glBindVertexArray(vao));
+
   unsigned int buffer;
   GlCall(glGenBuffers(1, &buffer));
   GlCall(glBindBuffer(GL_ARRAY_BUFFER, buffer));
   GlCall(glBufferData(GL_ARRAY_BUFFER, 6 * 2 * sizeof(float), positions, GL_STATIC_DRAW));
 
-  GlCall(glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (const void*)0));
   GlCall(glEnableVertexAttribArray(0));
+  GlCall(glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (const void*)0));
 
 
   unsigned int ibo; // index buffer object
@@ -171,11 +176,17 @@ int main(void)
   // std::cout << "FRAGMENT" << std::endl;
   // std::cout << source.fragmentSource << std::endl;
   unsigned int shader = createShader(source.vertexSource, source.fragmentSource);
-  GlCall((shader));
+  GlCall(glUseProgram(shader));
 
   GlCall(int location = glGetUniformLocation(shader, "u_color"));
   ASSERT(location != -1);
   GlCall(glUniform4f(location, 0.2f, 0.3f, 0.8f, 1.0f));
+
+  // unbind everything
+  GlCall(glBindVertexArray(0));
+  GlCall(glBindBuffer(GL_ARRAY_BUFFER, 0));
+  GlCall(glBindBuffer(GL_ARRAY_BUFFER, 0));
+  GlCall(glUseProgram(0));
 
   float r = 0.0f;
   float increment = 0.05f;
@@ -186,9 +197,16 @@ int main(void)
     /* Render here */
     GlCall(glClear(GL_COLOR_BUFFER_BIT));
 
+    GlCall(glBindBuffer(GL_ARRAY_BUFFER, buffer));
+    GlCall(glBindBuffer(GL_ARRAY_BUFFER, ibo));
+    GlCall(glUseProgram(shader));  
+
+    GlCall(glBindVertexArray(vao));
+    GlCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo));
+
     // glDrawArrays(GL_TRIANGLES, 0, 6); // no index buffer
-    // glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr); // with index buffer
-    GlCall(glDrawElements(GL_TRIANGLES, 6, GL_INT, nullptr)); // wrong(?)
+    GlCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr)); // with index buffer
+    // GlCall(glDrawElements(GL_TRIANGLES, 6, GL_INT, nullptr)); // wrong(?)
 
     if(r > 1.0f)
       increment = -0.05f;
