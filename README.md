@@ -133,3 +133,14 @@ Abstracting OpenGL into Classes
 + Abstract the vertex buffer creation and binding in a class called `VertexBuffer`
 + Abstract the index buffer creation and binding in a class called `IndexBuffer`
 + Substitute all manual vertex buffer and index buffer code with class methods in `application.cpp`
+
+<br>
+
+### Part 14
+-----------
+Buffer Layout Abstraction in OpenGL
+
++ Abstract Vertex Array Object interaction to separate class
++ Abstract Vertex Buffer Object interaction to separate class
++ Abstract defining Vertex Buffer layout to separate class
++ Replace all necessary code with the new classes to render a square

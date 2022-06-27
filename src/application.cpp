@@ -9,6 +9,7 @@
 #include "renderer.h"
 #include "vertexbuffer.h"
 #include "indexbuffer.h"
+#include "vertexarray.h"
 
 struct ShaderProgramSource
 {
@@ -114,7 +115,7 @@ int main(void)
   /* Make the window's context current */
   glfwMakeContextCurrent(window);
 
-  glfwSwapInterval(1);
+  glfwSwapInterval(1); // only if v-sync is supported
 
   GLenum err = glewInit();
   if(GLEW_OK != err)
@@ -123,83 +124,78 @@ int main(void)
   std::cout << "Status: Using GLEW " << glewGetString(GLEW_VERSION) << std::endl;
   std::cout << "Status: Using OpenGL Version " << glGetString(GL_VERSION) << std::endl;
 
-  { // scope the vertexbuffer and index buffer objects so glfwTerminate will terminate cleanly
-    float positions[8] = {
-      -0.5f, -0.5f,     // 0
-      0.5f, -0.5f,     // 1
-      //  0.5f,  0.5f,
-      0.5f,  0.5f,     // 2
-      -0.5f,  0.5f      // 3
-      // -0.5f, -0.5f
-    };
+  float positions[8] = {
+    -0.5f, -0.5f,     // 0
+    0.5f, -0.5f,     // 1
+    //  0.5f,  0.5f,
+    0.5f,  0.5f,     // 2
+    -0.5f,  0.5f      // 3
+    // -0.5f, -0.5f
+  };
 
-    unsigned int indices[6] = {
-      0, 1, 2,
-      2, 3, 0
-    };
+  unsigned int indices[6] = {
+    0, 1, 2,
+    2, 3, 0
+  };
 
-    unsigned int vao;
-    GlCall(glGenVertexArrays(1, &vao));
-    GlCall(glBindVertexArray(vao));
+  VertexArray va;
+  VertexBuffer vb(positions, 4 * 2 * sizeof(float));
+  VertexBufferLayout layout;
+  layout.push<float>(2);
+  va.addBuffer(vb, layout);
 
-    VertexBuffer vb(positions, 4 * 2 * sizeof(float));
+  IndexBuffer ib(indices, 6);
 
-    GlCall(glEnableVertexAttribArray(0));
-    GlCall(glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (const void*)0));
+  ShaderProgramSource source = parseShader("/home/mrbrwntstc/repos/redesigned-carnival/resources/shaders/basic.shader");
+  unsigned int shader = createShader(source.vertexSource, source.fragmentSource);
+  GlCall(glUseProgram(shader));
 
-    IndexBuffer ib(indices, 6);
+  GlCall(int location = glGetUniformLocation(shader, "u_color"));
+  ASSERT(location != -1);
+  GlCall(glUniform4f(location, 0.8f, 0.3f, 0.8f, 1.0f));
 
-    ShaderProgramSource source = parseShader("/home/mrbrwntstc/repos/redesigned-carnival/resources/shaders/basic.shader");
-    unsigned int shader = createShader(source.vertexSource, source.fragmentSource);
-    GlCall(glUseProgram(shader));
+  // unbind everything
+  GlCall(glBindVertexArray(0));
+  GlCall(glBindBuffer(GL_ARRAY_BUFFER, 0));
+  GlCall(glBindBuffer(GL_ARRAY_BUFFER, 0));
+  GlCall(glUseProgram(0));
 
-    GlCall(int location = glGetUniformLocation(shader, "u_color"));
-    ASSERT(location != -1);
-    GlCall(glUniform4f(location, 0.8f, 0.3f, 0.8f, 1.0f));
+  float r = 0.0f;
+  float increment = 0.05f;
 
-    // unbind everything
-    GlCall(glBindVertexArray(0));
-    GlCall(glBindBuffer(GL_ARRAY_BUFFER, 0));
-    GlCall(glBindBuffer(GL_ARRAY_BUFFER, 0));
-    GlCall(glUseProgram(0));
+  /* Loop until the user closes the window */
+  while (!glfwWindowShouldClose(window))
+  {
+    /* Render here */
+    GlCall(glClear(GL_COLOR_BUFFER_BIT));
 
-    float r = 0.0f;
-    float increment = 0.05f;
+    // GlCall(glBindBuffer(GL_ARRAY_BUFFER, buffer));
+    GlCall(glUseProgram(shader));  
 
-    /* Loop until the user closes the window */
-    while (!glfwWindowShouldClose(window))
-    {
-      /* Render here */
-      GlCall(glClear(GL_COLOR_BUFFER_BIT));
+    va.bind();
+    // GlCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo));
+    ib.bind();
 
-      // GlCall(glBindBuffer(GL_ARRAY_BUFFER, buffer));
-      GlCall(glUseProgram(shader));  
+    // glDrawArrays(GL_TRIANGLES, 0, 6); // no index buffer
+    GlCall(glUniform4f(location, r, 0.3f, 0.8f, 1.0f));
+    GlCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr)); // with index buffer
+    // GlCall(glDrawElements(GL_TRIANGLES, 6, GL_INT, nullptr)); // wrong(?)
 
-      GlCall(glBindVertexArray(vao));
-      // GlCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo));
-      ib.bind();
+    if(r > 1.0f)
+      increment = -0.05f;
+    else if(r < 0.0f)
+      increment = 0.05f;
 
-      // glDrawArrays(GL_TRIANGLES, 0, 6); // no index buffer
-      GlCall(glUniform4f(location, r, 0.3f, 0.8f, 1.0f));
-      GlCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr)); // with index buffer
-      // GlCall(glDrawElements(GL_TRIANGLES, 6, GL_INT, nullptr)); // wrong(?)
+    r += increment;
 
-      if(r > 1.0f)
-        increment = -0.05f;
-      else if(r < 0.0f)
-        increment = 0.05f;
+    /* Swap front and back buffers */
+    glfwSwapBuffers(window);
 
-      r += increment;
-
-      /* Swap front and back buffers */
-      glfwSwapBuffers(window);
-
-      /* Poll for and process events */
-      glfwPollEvents();
-    }
-
-    GlCall(glDeleteProgram(shader));
+    /* Poll for and process events */
+    glfwPollEvents();
   }
+
+  GlCall(glDeleteProgram(shader));
 
   glfwTerminate();
   return 0;
