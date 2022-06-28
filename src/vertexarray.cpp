@@ -1,5 +1,5 @@
 #include "vertexarray.h"
-#include "renderer.h"
+#include "glerrorlogging.h"
 
 VertexArray::VertexArray()
 {

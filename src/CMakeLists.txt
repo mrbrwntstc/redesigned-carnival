@@ -8,6 +8,8 @@ set(SOURCE_FILES
   vertexarray.h vertexarray.cpp
   vertexbufferlayout.h
   shader.h shader.cpp
+  renderer.h renderer.cpp
+  glerrorlogging.h glerrorlogging.cpp
 )
 
 add_executable(thechernopengl ${SOURCE_FILES})

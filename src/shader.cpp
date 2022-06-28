@@ -1,5 +1,5 @@
 #include "shader.h"
-#include "renderer.h"
+#include "glerrorlogging.h"
 
 #include <iostream>
 #include <fstream>

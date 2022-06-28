@@ -6,6 +6,7 @@
 #include <sstream>
 #include <string>
 
+#include "glerrorlogging.h"
 #include "renderer.h"
 #include "vertexbuffer.h"
 #include "indexbuffer.h"
@@ -81,22 +82,19 @@ int main(void)
   float r = 0.0f;
   float increment = 0.05f;
 
+  Renderer renderer;
+
   /* Loop until the user closes the window */
   while (!glfwWindowShouldClose(window))
   {
     /* Render here */
-    GlCall(glClear(GL_COLOR_BUFFER_BIT));
+    renderer.clear();
 
     // GlCall(glBindBuffer(GL_ARRAY_BUFFER, buffer));
     shader.bind();
     shader.setUniform4f("u_color", r, 0.3f, 0.8f, 1.0f);
 
-    va.bind();
-    ib.bind();
-
-    // glDrawArrays(GL_TRIANGLES, 0, 6); // no index buffer
-    GlCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr)); // with index buffer
-    // GlCall(glDrawElements(GL_TRIANGLES, 6, GL_INT, nullptr)); // wrong(?)
+    renderer.draw(va, ib, shader);
 
     if(r > 1.0f)
       increment = -0.05f;

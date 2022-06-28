@@ -4,7 +4,7 @@
 #include <vector>
 #include <GL/glew.h>
 
-#include "renderer.h"
+#include "glerrorlogging.h"
 
 struct VertexBufferElement
 {
