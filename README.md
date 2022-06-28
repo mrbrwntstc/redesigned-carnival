@@ -19,6 +19,7 @@
 - [Part 14](#part-14)
 - [Part 15](#part-15)
 - [Part 16](#part-16)
+- [Part 17](#part-17)
 
 <br>
 
@@ -168,3 +169,9 @@ Writing a basic renderer in OpenGL
 + Abstract the steps require to render the square in the render loop into the `Renderer` class
 + Replace render code with the `Renderer` function calls
 + Move the custom OpenGL logging calls to a separate file to prevent circular inclusion
+
+<br>
+
+### Part 17
+-----------
+Textures in OpenGL
