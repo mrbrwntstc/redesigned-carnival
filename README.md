@@ -18,6 +18,7 @@
 - [Part 13](#part-13)
 - [Part 14](#part-14)
 - [Part 15](#part-15)
+- [Part 16](#part-16)
 
 <br>
 
@@ -157,6 +158,8 @@ Shader Abstraction in OpenGL
 
 + Abstract all shader creation and utilization code into a class called `Shader`.
 + Use the `Shader` class in `application.cpp`
+
+<br>
 
 ### Part 16
 -----------
