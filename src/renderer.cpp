@@ -1,19 +1,18 @@
 #include "renderer.h"
+#include "glerrorlogging.h"
 
 #include <iostream>
 
-void GlClearError()
+void Renderer::draw(const VertexArray& va, const IndexBuffer& ib, const Shader& shader) const
 {
-  while(glGetError() != GL_NO_ERROR);
+  shader.bind();
+  va.bind();
+  ib.bind();
+
+  GlCall(glDrawElements(GL_TRIANGLES, ib.getCount(), GL_UNSIGNED_INT, nullptr));
 }
 
-bool  GlLogCall(const char* function, const char* file, int line)
+void Renderer::clear() const
 {
-  while(GLenum error = glGetError())
-  {
-    std::cout << "[OpenGL Error] (" << error << "): " << function << " " << file << ": " << line << std::endl;
-    return false;
-  }
-
-  return true;
+  GlCall(glClear(GL_COLOR_BUFFER_BIT));
 }

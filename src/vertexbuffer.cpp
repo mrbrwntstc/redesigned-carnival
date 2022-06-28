@@ -1,5 +1,5 @@
 #include "vertexbuffer.h"
-#include "renderer.h"
+#include "glerrorlogging.h"
 
 VertexBuffer::VertexBuffer(const void* data, unsigned int size)
 {
