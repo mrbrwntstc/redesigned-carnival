@@ -10,6 +10,8 @@ set(SOURCE_FILES
   shader.h shader.cpp
   renderer.h renderer.cpp
   glerrorlogging.h glerrorlogging.cpp
+  vendor/stb_image.h vendor/stb_image.cpp
+  texture.h texture.cpp
 )
 
 add_executable(thechernopengl ${SOURCE_FILES})

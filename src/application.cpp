@@ -12,6 +12,7 @@
 #include "indexbuffer.h"
 #include "vertexarray.h"
 #include "shader.h"
+#include "texture.h"
 
 int main(void)
 {
@@ -46,12 +47,12 @@ int main(void)
   std::cout << "Status: Using GLEW " << glewGetString(GLEW_VERSION) << std::endl;
   std::cout << "Status: Using OpenGL Version " << glGetString(GL_VERSION) << std::endl;
 
-  float positions[8] = {
-    -0.5f, -0.5f,     // 0
-    0.5f, -0.5f,     // 1
+  float positions[16] = {
+    -0.5f, -0.5f, 0.0f, 0.0f, // 0
+    0.5f, -0.5f, 1.0f, 0.0f,  // 1
     //  0.5f,  0.5f,
-    0.5f,  0.5f,     // 2
-    -0.5f,  0.5f      // 3
+    0.5f,  0.5f, 1.0f, 1.0f,  // 2
+    -0.5f,  0.5f, 0.0f, 1.0f  // 3
     // -0.5f, -0.5f
   };
 
@@ -60,18 +61,27 @@ int main(void)
     2, 3, 0
   };
 
+  GlCall(glEnable(GL_BLEND));
+  GlCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
+
   VertexArray va;
-  VertexBuffer vb(positions, 4 * 2 * sizeof(float));
+  VertexBuffer vb(positions, 4 * 4 * sizeof(float));
+
   VertexBufferLayout layout;
+  layout.push<float>(2);
   layout.push<float>(2);
   va.addBuffer(vb, layout);
 
   IndexBuffer ib(indices, 6);
 
-  Shader shader("/home/mrbrwntstc/repos/redesigned-carnival/resources/shaders/basic.shader");
+  Shader shader("/home/gbaby/repos/redesigned-carnival/resources/shaders/basic.shader");
   shader.bind();
 
   shader.setUniform4f("u_color", 0.8f, 0.3f, 0.8f, 1.0f);
+
+  Texture texture("/home/gbaby/repos/redesigned-carnival/resources/textures/the_cherno_logo.png");
+  texture.bind();
+  shader.setUniform1i("u_texture", 0);
 
   // unbind everything
   va.unbind();
