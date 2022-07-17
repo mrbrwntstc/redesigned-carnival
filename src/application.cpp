@@ -76,12 +76,16 @@ int main(void)
   IndexBuffer ib(indices, 6);
 
   glm::mat4 proj = glm::ortho(0.0f, 960.0f, 0.0f, 540.0f, -1.0f, 1.0f);
+  glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(-100.0f, 0, 0));
+  glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(200.0f, 200.0f, 0));
+
+  glm::mat4 mvp = proj * view * model;
 
   Shader shader("/home/gbaby/repos/redesigned-carnival/resources/shaders/basic.shader");
   shader.bind();
 
   shader.setUniform4f("u_color", 0.8f, 0.3f, 0.8f, 1.0f);
-  shader.setUniformMat4f("u_mvp", proj);
+  shader.setUniformMat4f("u_mvp", mvp);
 
   Texture texture("/home/gbaby/repos/redesigned-carnival/resources/textures/the_cherno_logo.png");
   texture.bind();
