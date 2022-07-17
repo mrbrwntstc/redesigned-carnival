@@ -158,3 +158,12 @@ Textures in OpenGL
 - update the `positions` im `application.cpp` to include texture binding coordinates
 - update `resources/shaders/basic.shader` to render the texture
 - enable blending and utilize a simple OpenGL blend method to make the logo less trashy
+
+### Part 19
+
+Maths in OpenGL
+
+- Install the [GLM](https://github.com/g-truc/glm) libraries/source somehow
+- create a projection matrix that's an orthogonal matrix
+- create a uniform variable in the vertex shader to take the projection matrix
+- add capability to set mat4 objects in `shader.h` and `shader.cpp`

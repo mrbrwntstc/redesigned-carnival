@@ -14,6 +14,9 @@
 #include "shader.h"
 #include "texture.h"
 
+#include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
+
 int main(void)
 {
   GLFWwindow* window;
@@ -74,10 +77,14 @@ int main(void)
 
   IndexBuffer ib(indices, 6);
 
+  // if you double all of the values, you get a 4:3 aspect ratio
+  glm::mat4 proj = glm::ortho(-2.0f, 2.0f, -1.5f, 1.5f, -1.0f, 1.0f);
+
   Shader shader("/home/gbaby/repos/redesigned-carnival/resources/shaders/basic.shader");
   shader.bind();
 
   shader.setUniform4f("u_color", 0.8f, 0.3f, 0.8f, 1.0f);
+  shader.setUniformMat4f("u_mvp", proj);
 
   Texture texture("/home/gbaby/repos/redesigned-carnival/resources/textures/the_cherno_logo.png");
   texture.bind();
