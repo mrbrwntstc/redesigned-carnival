@@ -20,11 +20,9 @@
 - [Part 14](#part-14)
 - [Part 15](#part-15)
 - [Part 16](#part-16)
-- [Part 17](#part-17)
 
 ### Part 2
 
-----------
 Setting up OpenGL and Creating a Window in C++.
 
 - Install GLFW
@@ -34,7 +32,6 @@ Setting up OpenGL and Creating a Window in C++.
 
 ### Part 3
 
-----------
 Using Modern OpenGL in C++
 
 - Download and/or install GLEW
@@ -44,7 +41,6 @@ Using Modern OpenGL in C++
 
 ### Part 4
 
-----------
 Vertex Buffers and Drawing a Triangle in OpenGL
 
 - Create a vertex buffer
@@ -52,14 +48,12 @@ Vertex Buffers and Drawing a Triangle in OpenGL
 
 ### Part 5
 
-----------
 Vertex Attributes and Layouts in OpenGL
 
 - Specify the location and data format of the vertex buffer using `glVertexAttribPointer` (will make more sense once the shader is written)
 
 ### Part 7
 
-----------
 Writing a Shader in OpenGL
 
 - Write and compile a vertex shader
@@ -70,7 +64,6 @@ Writing a Shader in OpenGL
 
 ### Part 8
 
-----------
 The Cherno's Way of Dealing with Shaders in OpenGL
 
 - Move the vertex and fragment shader source code to a file
@@ -81,7 +74,6 @@ The Cherno's Way of Dealing with Shaders in OpenGL
 
 ### Part 9
 
-----------
 Index Buffers in OpenGL
 
 - Create an index buffer to prevent drawing duplicate vertices
