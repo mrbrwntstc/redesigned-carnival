@@ -20,6 +20,8 @@
 - [Part 14](#part-14)
 - [Part 15](#part-15)
 - [Part 16](#part-16)
+- [Part 19](#part-19)
+- [Part 20](#part-20)
 
 ### Part 2
 
@@ -167,3 +169,11 @@ Maths in OpenGL
 - create a projection matrix that's an orthogonal matrix
 - create a uniform variable in the vertex shader to take the projection matrix
 - add capability to set mat4 objects in `shader.h` and `shader.cpp`
+
+### Part 20
+
+Projection matrices in OpenGL
+
+- change the screen size to 960 x 540
+- change the projection matrix to pixels instead of ordered pairs
+- change the points of the position matrix

@@ -31,4 +31,5 @@ PRIVATE
   glfw
   OpenGL::GL
   ${GLEW_LIBRARIES}
+  ${glm_LIBRARIES}
 )
