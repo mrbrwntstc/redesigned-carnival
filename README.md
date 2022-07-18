@@ -177,3 +177,12 @@ Projection matrices in OpenGL
 - change the screen size to 960 x 540
 - change the projection matrix to pixels instead of ordered pairs
 - change the points of the position matrix
+
+### Part 21
+
+Model View Projection Matrices in OpenGL
+
+- model: defines position, rotation, and scale of the vertices of the model in the world
+- view: defines position and orientation of the "camera"
+- projection: maps what the "camera" sees to NDC, taking care of aspect ratio and perspective
+- create a model view projection matrix to change the position of the logo
